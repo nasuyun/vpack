@@ -181,3 +181,6 @@ GET score/_search
 
 1. **关联字段类型** 关联外键请使用数值类型（integer或long)。
 2. **数据裁剪** 出于对服务端的保护，join操作在取中间结果集时有个阈值保护，默认阈值为100万，超出阈值则中断查询，若发生截断SearchResponse会增加 ealy_terminated:true 提示检索数据被裁剪。
+
+
+#### copyright by nasuyun.com

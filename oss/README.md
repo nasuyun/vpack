@@ -6,7 +6,7 @@ PUT _snapshot/oss
 {
 	"type": "oss",
 	"settings": {
-		"endpoint": "http://oss-cn-shanghai.aliyuncs.com",
+		"endpoint": "xxx",
 		"access_key_id": "xxx",
 		"access_key_secret": "xxx",
 		"bucket_name": "xxx",
@@ -31,4 +31,6 @@ GET _snapshot/oss/*
 
 ## 恢复
 
-POST _snapshot/oss/2022_09_01_22_02_13/_restore
+POST _snapshot/oss/{spanshot_id}/_restore
+
+#### copyright by nasuyun.com

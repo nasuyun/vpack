@@ -55,6 +55,11 @@ PUT /_xdcr/{repository}/{index}
 DELETE /_xdcr/{repository}/{index}
 ```
 
+- 仅做远程恢复索引，不做同步
+```
+_xdcr/_recovery/{repository}/{index}
+```
+
 - 开启集群级别同步
 ```
 POST /_xdcr/{repository}
@@ -87,14 +92,48 @@ excludes:index-1,index-2,*kibana*
 
 ```
 GET _cat/xdcr
-greeting3 backup 0 494    494
-greeting3 backup 1 504    504
-greeting4 backup 0 99988  99988
-greeting4 backup 1 100010 100010
-greeting2 backup 0 -1     -1
-greeting2 backup 1 -1     -1
-greeting1 backup 0 56030  56030
-greeting1 backup 1 55968  55968
-```
-列名：索引名|远程集群|shard|本地maxSeqNo|远程MaxSeqNo
 
+index           repository shard localMaxSeqNo remoteMaxSeqNo
+foo.logs-221998 cloud_dev  0     891889        891889
+foo.logs-221998 cloud_dev  1     891258        891258
+foo.logs-221998 cloud_dev  2     893193        893193
+foo.logs-221998 cloud_dev  3     894165        894165
+foo.logs-221998 cloud_dev  4     892704        892704
+foo.logs-221998 cloud_dev  5     893289        893289
+foo.logs-221998 cloud_dev  6     893017        893017
+foo.logs-221998 cloud_dev  7     894805        894805
+
+```
+
+```
+_xdcr/stats
+
+{
+	"isPeer": true,
+	"notPeer": [],
+	"stats": [
+		{
+			"repository": "cloud_dev",
+			"index": "foo.logs-221998",
+			"shard": 0,
+			"local": {
+				"seq_no": {
+					"max_seq_no": 891889,
+					"local_checkpoint": 891889,
+					"global_checkpoint": 891889
+				}
+			},
+			"remote": {
+				"seq_no": {
+					"max_seq_no": 891889,
+					"local_checkpoint": 891889,
+					"global_checkpoint": 891889
+				}
+			}
+		},
+	    ...
+	]
+}
+```
+
+#### copyright by nasuyun.com
