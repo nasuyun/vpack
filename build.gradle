@@ -1,0 +1,23 @@
+apply plugin: 'idea'
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        // ES版本号
+        classpath "org.elasticsearch.gradle:build-tools:6.8.23"
+    }
+}
+
+subprojects {
+
+    // 插件版本号
+    version = '6.8.23.1'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+}

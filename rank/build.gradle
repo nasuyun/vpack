@@ -1,0 +1,13 @@
+apply plugin: 'elasticsearch.esplugin'
+apply plugin: 'idea'
+esplugin {
+    description 'Elasticsearch Ranke Plugin.'
+    classname 'org.elasticsearch.apack.RankPlugin'
+    name 'a-pack-rank'
+    licenseFile = rootProject.file('LICENSE.txt')
+    noticeFile = rootProject.file('NOTICE.txt')
+}
+
+test.enabled = false
+integTest.enabled = false
+
