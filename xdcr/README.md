@@ -1,16 +1,15 @@
-Elasticsearch XDCR (Cross DataCenter Replication ) 提供跨集群复制支持，满足场景：
+# Elasticsearch XDCR (Cross DataCenter Replication ) 
 
+提供跨集群复制支持，满足场景：
 异地高可用 (HA)：对于许多任务核心链路应用程序，都需要能够承受住数据中心或区域服务中断的影响。通过 XDCR 中的原生功能即可满足跨数据中心的 DR/HA 要求，且无需其他技术。
-
 就近访问：将数据复制到更靠近用户或应用程序服务器的位置，可以减少延迟，降低成本。例如，可以将产品列表或参考数据集复制到全球 20 个或更多数据中心，最大限度地缩短数据与应用程序服务器之间的距离。
-
 
 ## 使用样例
 
 ###  主集群建立索引
 > 注意：index_settings 必须开启 soft_deletes
 
-```
+```json
 PUT index-1
 {
 	"settings": {
@@ -105,7 +104,7 @@ foo.logs-221998 cloud_dev  7     894805        894805
 
 ```
 
-```
+```json
 _xdcr/stats
 
 {
