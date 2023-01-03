@@ -1,11 +1,3 @@
-/*
- * Copyright Elasticsearch B.V. and/or licensed to Elasticsearch B.V. under one
- * or more contributor license agreements. Licensed under the Elastic License
- * 2.0 and the Server Side Public License, v 1; you may not use this file except
- * in compliance with, at your election, the Elastic License 2.0 or the Server
- * Side Public License, v 1.
- */
-
 package org.elasticsearch.apack.xdcr.repository;
 
 import org.apache.logging.log4j.Logger;
@@ -27,24 +19,6 @@ import java.util.function.Consumer;
 import static org.elasticsearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
 import static org.elasticsearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
-/**
- * File chunks are sent/requested sequentially by at most one thread at any time. However, the sender/requestor won't wait for the response
- * before processing the next file chunk request to reduce the recovery time especially on secure/compressed or high latency communication.
- * <p>
- * The sender/requestor can send up to {@code maxConcurrentFileChunks} file chunk requests without waiting for responses. Since the recovery
- * target can receive file chunks out of order, it has to buffer those file chunks in memory and only flush to disk when there's no gap.
- * To ensure the recover target never buffers more than {@code maxConcurrentFileChunks} file chunks, we allow the sender/requestor to send
- * only up to {@code maxConcurrentFileChunks} file chunk requests from the last flushed (and acknowledged) file chunk. We leverage the local
- * checkpoint tracker for this purpose. We generate a new sequence number and assign it to each file chunk request before sending; then mark
- * that sequence number as processed when we receive a response for the corresponding file chunk request. With the local checkpoint tracker,
- * we know the last acknowledged-flushed file-chunk is a file chunk whose {@code requestSeqId} equals to the local checkpoint because the
- * recover target can flush all file chunks up to the local checkpoint.
- * <p>
- * When the number of un-replied file chunk requests reaches the limit (i.e. the gap between the max_seq_no and the local checkpoint is
- * greater than {@code maxConcurrentFileChunks}), the sending/requesting thread will abort its execution. That process will be resumed by
- * one of the networking threads which receive/handle the responses of the current pending file chunk requests. This process will continue
- * until all chunk requests are sent/responded.
- */
 public abstract class MultiChunkTransfer<Source, Request extends MultiChunkTransfer.ChunkRequest> implements Closeable {
     private Status status = Status.PROCESSING;
     private final Logger logger;

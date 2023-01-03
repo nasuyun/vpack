@@ -1,8 +1,3 @@
-/*
- * Copyright Elasticsearch B.V. and/or licensed to Elasticsearch B.V. under one
- * or more contributor license agreements. Licensed under the Elastic License;
- * you may not use this file except in compliance with the Elastic License.
- */
 package org.elasticsearch.apack.plain.type;
 
 import org.elasticsearch.apack.plain.util.DateUtils;
@@ -15,12 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/**
- * Elasticsearch SQL data types.
- * This class also implements JDBC {@link SQLType} for properly receiving and setting values.
- * Where possible, please use the build-in, JDBC {@link Types} and {@link JDBCType} to avoid coupling
- * to the API.
- */
 public enum DataType {
 
     // @formatter:off
