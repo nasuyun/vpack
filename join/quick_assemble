@@ -1,3 +1,0 @@
-gradle clean assemble
-
-oss cp build/distributions/a-pack-join-6.8.23.1.zip oss://ebase/release/elk/v6.8.23/ -f
